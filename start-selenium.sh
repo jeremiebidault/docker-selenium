@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar /selenium-server-standalone-3.9.0.jar
+java -jar /selenium-server.jar standalone --port 4444
