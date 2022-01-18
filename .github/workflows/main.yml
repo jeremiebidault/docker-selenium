@@ -29,6 +29,6 @@ jobs:
           push: true
           build-args: |
             SELENIUM=${{ matrix.SELENIUM }}
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:4.0.0
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM }}
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM }}
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM }},mode=max
