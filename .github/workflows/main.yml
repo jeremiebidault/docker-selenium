@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        SELENIUM: ["4.0.0"]
     steps:
       - name: Checkout 
         uses: actions/checkout@v2
@@ -25,7 +28,7 @@ jobs:
           context: .
           push: true
           build-args: |
-            SELENIUM=4.0.0
+            SELENIUM=${{ matrix.SELENIUM }}
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:4.0.0
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:4.0.0
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:4.0.0,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM }}
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM }},mode=max
