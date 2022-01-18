@@ -24,6 +24,8 @@ jobs:
         with:
           context: .
           push: true
+          build-args: |
+            SELENIUM=4.0.0
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:action-test
           cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:buildcache
           cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/selenium:buildcache,mode=max
