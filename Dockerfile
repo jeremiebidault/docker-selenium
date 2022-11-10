@@ -17,6 +17,8 @@ COPY . /
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
+        gnupg2 \
+        git \
         sudo \
         curl \
         jq \
