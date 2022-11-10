@@ -69,8 +69,7 @@ RUN SELENIUM_URI=$(curl -sL https://api.github.com/repos/SeleniumHQ/selenium/rel
     wget -q -O /selenium-server.jar "${SELENIUM_URI}"
 
     # supervisord
-RUN mv supervisord.conf /etc/supervisor/conf.d/ && \
-    chmod +x start-xvfb.sh start-fluxbox.sh start-selenium.sh
+RUN mv supervisord.conf /etc/supervisor/conf.d/
 
     # cleanup
 RUN rm -rf /var/lib/apt/lists/*
