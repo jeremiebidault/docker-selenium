@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 
-ARG DEBIAN_FRONTEND=noninteractive
+ARG SELENIUM_RELEASE \
+    DEBIAN_FRONTEND=noninteractive
 
 ENV WIDTH=1920 \
     HEIGHT=1080 \
@@ -17,9 +18,6 @@ COPY . /
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
-        gnupg2 \
-        git \
-        sudo \
         curl \
         jq \
         wget \
@@ -53,22 +51,20 @@ RUN wget -q "https://chromedriver.storage.googleapis.com/$(curl -sL https://chro
     chromedriver --version
 
     # firefox
-RUN wget -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US" && \
+RUN wget -q -O firefox.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64&lang=en-US" && \
     tar -xjf firefox.tar.bz2 -C /usr/local/lib && \
     ln -sf /usr/local/lib/firefox/firefox /usr/bin/firefox && \
     rm -rf firefox.tar.bz2 && \
     firefox --version
 
     # geckodriver
-RUN GECKODRIVER_URI=$(curl -sL https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[] | select(.name | test("^geckodriver-v.*-linux64\\.tar\\.gz$")) | .browser_download_url') && \
-    wget -q -O geckodriver-linux64.tar.gz "${GECKODRIVER_URI}" && \
+RUN wget -q -O geckodriver-linux64.tar.gz "$(curl -sL https://api.github.com/repos/mozilla/geckodriver/releases/latest | jq -r '.assets[] | select(.name | test("^geckodriver-v.*-linux64\\.tar\\.gz$")) | .browser_download_url')" && \
     tar -xzf geckodriver-linux64.tar.gz -C /usr/bin && \
     rm -rf geckodriver-linux64.tar.gz && \
     geckodriver --version
 
     # selenium
-RUN SELENIUM_URI=$(curl -sL https://api.github.com/repos/SeleniumHQ/selenium/releases/latest | jq -r '.assets[] | select(.name | test("^selenium-server-.*\\.jar$")) | .browser_download_url') && \
-    wget -q -O /selenium-server.jar "${SELENIUM_URI}"
+RUN wget -q -O /selenium-server.jar "$(curl -sL https://api.github.com/repos/SeleniumHQ/selenium/releases/latest | jq -r '.assets[] | select(.name | test("^selenium-server-.*\\.jar$")) | .browser_download_url')"
 
     # supervisord
 RUN mv supervisord.conf /etc/supervisor/conf.d/
