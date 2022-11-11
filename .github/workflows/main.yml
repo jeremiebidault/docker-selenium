@@ -28,5 +28,5 @@ jobs:
           context: .
           push: true
           build-args: |
-            SELENIUM=${{ matrix.SELENIUM_RELEASE }}
+            SELENIUM_RELEASE=${{ matrix.SELENIUM_RELEASE }}
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM_RELEASE }}
