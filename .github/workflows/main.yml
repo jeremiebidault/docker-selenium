@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        SELENIUM: ["4.6.0"]
+        SELENIUM_RELEASE: ["4.6.0"]
     steps:
       - name: Checkout 
         uses: actions/checkout@v2
@@ -28,5 +28,5 @@ jobs:
           context: .
           push: true
           build-args: |
-            SELENIUM=${{ matrix.SELENIUM }}
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM }}
+            SELENIUM=${{ matrix.SELENIUM_RELEASE }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/selenium:${{ matrix.SELENIUM_RELEASE }}
