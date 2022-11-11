@@ -22,12 +22,13 @@ RUN apt-get update && \
         jq \
         wget \
         unzip \
-        bzip2
+        bzip2 \
+        gnupg2
 
 # google-chrome
 RUN curl -sL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor -o /usr/share/keyrings/google.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" | tee /etc/apt/sources.list.d/google-chrome.list && \
-    apt-get update -y && \
+    echo "deb [signed-by=/usr/share/keyrings/google.gpg] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list && \
+    apt-get update && \
     apt-get -y install \
         google-chrome-stable && \
     google-chrome --version
@@ -39,7 +40,7 @@ RUN wget -q "https://chromedriver.storage.googleapis.com/$(curl -sL https://chro
     chromedriver --version
 
 # firefox
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -y \
         libgtkd-3-dev \
         libasound2-dev \
         libdbus-glib-1-2 && \
@@ -56,7 +57,7 @@ RUN wget -q -O geckodriver-linux64.tar.gz "$(curl -sL https://api.github.com/rep
     geckodriver --version
 
 # selenium
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -y \
         openjdk-11-jdk-headless \
         xvfb \
         fluxbox && \
@@ -64,7 +65,7 @@ RUN apt-get install -y --no-install-recommends \
     wget -q -O /selenium-server.jar "https://github.com/SeleniumHQ/selenium/releases/download/selenium-${SELENIUM_RELEASE}/selenium-server-${SELENIUM_RELEASE}.jar"
 
 # supervisord
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install -y \
         supervisor && \
     mv supervisord.conf /etc/supervisor/conf.d/
 
