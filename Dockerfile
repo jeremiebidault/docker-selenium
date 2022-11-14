@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:20.04
 
 ARG SELENIUM_RELEASE \
     DEBIAN_FRONTEND=noninteractive
